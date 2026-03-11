@@ -30,8 +30,9 @@ function App() {
     try {
       setIsLoading(true);
       setStatus("Processing...");
-      // do not manually set Content-Type; axios will add boundary automatically
-      const response = await axios.post(`${API_URL}/upload`, formData);
+      await axios.post(`${API_URL}/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setStatus("Success! Email sent.");
       setFile(null);
       setEmail("");

@@ -1,0 +1,29 @@
+{
+  "app": "RabbittAI",
+  "version": "1.0.0",
+  "releaseDate": "2026-03-11",
+  "environment": "production",
+  "frontend": {
+    "version": "1.0.0",
+    "framework": "React",
+    "buildTool": "Vite",
+    "path": "./frontend"
+  },
+  "backend": {
+    "version": "1.0.0",
+    "runtime": "Node.js",
+    "framework": "Express",
+    "path": "./backend"
+  },
+  "features": [
+    "File Upload",
+    "AI Processing",
+    "Email Notifications"
+  ],
+  "deployments": {
+    "frontend": "Vercel",
+    "backend": "Railway"
+  },
+  "author": "aksha",
+  "license": "MIT"
+}
