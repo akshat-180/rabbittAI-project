@@ -40,7 +40,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/upload", uploadRoute);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Only serve Swagger in development
+if (process.env.NODE_ENV !== "production") {
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
