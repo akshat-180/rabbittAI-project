@@ -13,7 +13,20 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(helmet());
+
+// Configure helmet to allow Swagger assets
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+        imgSrc: ["'self'", "data:", "https:"],
+      },
+    },
+  })
+);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -21,10 +34,15 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use("/upload", uploadRoute);
+// Health check
+app.get("/", (req, res) => {
+  res.json({ message: "Backend running", status: "ok" });
+});
 
+app.use("/upload", uploadRoute);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server running on ${process.env.PORT}`)
-);
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
