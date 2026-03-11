@@ -39,7 +39,19 @@ function App() {
 
       <button onClick={handleSubmit}>Generate Summary</button>
 
-      <p>{status}</p>
+      <p
+  className={`status ${
+    status.includes("Processing")
+      ? "processing"
+      : status.includes("Error")
+      ? "error"
+      : status
+      ? "success"
+      : ""
+  }`}
+>
+  {status}
+</p>
     </div>
   );
 }
